@@ -11,7 +11,9 @@ from telegram.ext import (
     Updater, Dispatcher, Filters,
     CommandHandler, MessageHandler,
     CallbackQueryHandler,
+    InlineQueryHandler,
 )
+from .handlers.post_handler import post_handler
 
 from dtb.celery import app  # event processing in async mode
 from dtb.settings import TELEGRAM_TOKEN, DEBUG
@@ -51,6 +53,11 @@ def setup_dispatcher(dp):
     )
     dp.add_handler(
         CallbackQueryHandler(broadcast_handlers.broadcast_decision_handler, pattern=f"^{CONFIRM_DECLINE_BROADCAST}")
+    )
+
+    #serach post
+    dp.add_handler(
+        InlineQueryHandler(post_handler)
     )
 
     # files

@@ -1,9 +1,11 @@
 from __future__ import annotations
+from distutils.command.upload import upload
 
 from typing import Union, Optional, Tuple
 
 from django.db import models
 from django.db.models import QuerySet, Manager
+from django.forms import NullBooleanField
 from telegram import Update
 from telegram.ext import CallbackContext
 
@@ -93,3 +95,13 @@ class Location(CreateTracker):
             save_data_from_arcgis(latitude=self.latitude, longitude=self.longitude, location_id=self.pk)
         else:
             save_data_from_arcgis.delay(latitude=self.latitude, longitude=self.longitude, location_id=self.pk)
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=150)
+    image = models.URLField(null=True, blank=True)
+    content =  models.TextField()
+
+    def __str__(self) -> str:
+        return self.title
+ 

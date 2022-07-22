@@ -11,6 +11,10 @@ from tgbot.forms import BroadcastForm
 from tgbot.tasks import broadcast_message
 from tgbot.handlers.broadcast_message.utils import _send_message
 
+from .models import Post
+
+admin.site.register(Post)
+
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
